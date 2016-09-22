@@ -7,10 +7,24 @@ h1 , p{
     font-size: 14pt;
 }
 
-div{
+body > div {
+    position: relative;
+    width: 400px;
+    height: 400px;
+    margin: auto;
+}
 
+div div{
+	position: absolute;
+	width: 90px;
+	height: 70px;
+	text-align: center;
+	padding-top: 20px;
+	font-size: 40px;
+	border: 5px solid black;
 }
 
 B{
 border: solid thin;
+cursor: pointer;
 }
