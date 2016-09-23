@@ -7,9 +7,9 @@
     var blocks = [[],[],[],[]];
     var blockEls = document.querySelectorAll('div div');
 
-    blockEls.forEach(function(element, index) {
-        blocks[index % 4].push(new block(element, index % 4, parseInt(index / 4)));
-    });
+    for(var i = 0; i < blockEls.length; i++){
+        blocks[i % 4].push(new block(blockEls[i], i % 4, parseInt(i / 4)));
+    }
 
     blocks[3][3] = null;
 
@@ -20,8 +20,7 @@
         this.init = function(x, y) {
             instance.updatePosition(x, y);
             instance.el.style['background-image'] = 'url(background.jpg)';
-            instance.el.style['background-position-x'] = (-1 * blockSize * x) + 'px';
-            instance.el.style['background-position-y'] = (-1 * blockSize * y) + 'px';
+            instance.el.style['background-position'] = (-1 * blockSize * x) + 'px ' + (-1 * blockSize * y) + 'px';
             instance.el.addEventListener('mouseover', instance.mouseover);
             instance.el.addEventListener('mouseout', instance.mouseout);
             instance.el.addEventListener('click', instance.click);
