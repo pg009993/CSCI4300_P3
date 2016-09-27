@@ -13,14 +13,23 @@
 
     var blocks = [[],[],[],[]]; // two dimensional array to be populated with block objects
     var blockEls = document.querySelectorAll('div div'); // grabs all block elements from the page
-
+    
     // for each block element on the page, create a new block() object and add into the grid
     for(var i = 0; i < blockEls.length; i++){
         blocks[i % 4].push(new block(blockEls[i], i % 4, parseInt(i / 4)));
     }
-
+    
     // use null to represent the empty square
     blocks[3][3] = null;
+    
+    // iterates through blocks, setting class name for highlight
+    for(var i = 0; i < blocks.length; i++){
+        for(var j = 0; j < blocks[i].length; j++){
+            if(blocks[i][j]){
+                blocks[i][j].setClass();
+            }
+        }
+    }
 
     // this function defines a block, given the html element, and an x,y position
     function block(el, x, y) {
@@ -33,8 +42,6 @@
             instance.updatePosition(x, y);
             instance.el.style['background-image'] = 'url(background.jpg)';
             instance.el.style['background-position'] = (-1 * blockSize * x) + 'px ' + (-1 * blockSize * y) + 'px';
-            instance.el.addEventListener('mouseover', instance.mouseover);
-            instance.el.addEventListener('mouseout', instance.mouseout);
             instance.el.addEventListener('click', instance.click);
         };
 
@@ -45,19 +52,16 @@
             instance.el.style.left = (blockSize * x) + 'px';
             instance.el.style.top = (blockSize * y) + 'px';
         };
-
-        // when a block is moused over, if the block can move change border to red
-        this.mouseover = function() {
-            if(instance.canMove() !== false){
-                instance.el.style['border'] = '5px solid red';
+        
+        // sets the class to enable hover highlight
+        this.setClass = function(){
+            if(instance.canMove()){
+                instance.el.className = 'canmove';
+            } else {
+                instance.el.className = '';
             }
         };
 
-        // on mouseout, restore border to black
-        this.mouseout = function() {
-            instance.el.style['border'] = '5px solid black';
-        };
-        
         // on click, if the block can move, call the move block function
         this.click = function(){
             var movePos = instance.canMove();
@@ -92,7 +96,7 @@
         this.init(x, y);
     }
     
-    // swaps the positions of two blocks given their x,y coordinates
+    // swaps the positions of two blocks given their x,y coordinates, then sets class names for all blocks
     function moveBlocks(x1, y1, x2, y2){
         var temp = blocks[x1][y1];
         blocks[x1][y1] = blocks[x2][y2];
@@ -102,6 +106,13 @@
         }
         if(blocks[x2][y2]){
             blocks[x2][y2].updatePosition(x2, y2);
+        }
+        for(var i = 0; i < blocks.length; i++){
+            for(var j = 0; j < blocks[i].length; j++){
+                if(blocks[i][j]){
+                    blocks[i][j].setClass();
+                }
+            }
         }
     }
    

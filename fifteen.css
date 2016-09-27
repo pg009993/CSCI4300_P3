@@ -28,3 +28,7 @@ B{
 border: solid thin;
 cursor: pointer;
 }
+
+.canmove:hover {
+    border: 5px solid red;
+}
