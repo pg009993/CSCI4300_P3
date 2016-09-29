@@ -133,22 +133,46 @@
         }
         
         // iterates over 1000 moves
+        
         for(i = 0; i < 1000; i++){
+       
             // finds all valid neighbors of the empty block
             neighbors = [];
+            
+            // if x position of blank block is 0 then it has right neighbor.
+            if(blankX == 0){
+                neighbors.push(blocks[blankX+1][blankY]);
+            }
+            // if its greater than 0 then it has a left neighbor.
             if(blankX > 0){
                 neighbors.push(blocks[blankX - 1][blankY]);
             }
-            if(blankX > numBlocks - 1){
-                neighbors.push(blocks[blankX+ 1][blankY]);
+            // if its position is less than the 4th block then it has a right neighbor.
+            if(blankX < numBlocks - 1){
+                neighbors.push(blocks[blankX+1][blankY]);
             }
+            // if its position is the last block then it has a left neighbor. 
+            if(blankX == numBlocks - 1){
+                neighbors.push(blocks[blankX-1][blankY]);
+            }
+            // if its y position is 0 then it has a neighbor below.
+            if(blankY == 0){
+                neighbors.push(blocks[blankX][blankY+1]);
+            }
+            // if its y position is not 0 then it has a neighbor above.
             if(blankY > 0){
-                neighbors.push(blocks[blankX][blankY - 1]);
+                neighbors.push(blocks[blankX][blankY - 1]);    
             }
+            // if its y position is not the last block then it has a neighbor below.
             if(blankY < numBlocks - 1){
                 neighbors.push(blocks[blankX][blankY + 1]);
             }
+            // if its y position is the last block then it has a neighbor above. 
+            if(blankY == numBlocks - 1){
+                neighbors.push(blocks[blankX][blankY-1]);
+            }
             // chooses a random neighbor to swap
+        
             swap = neighbors[parseInt(Math.random() * neighbors.length)];
             
             // calls the move method, storing the old locaiton as it is the
